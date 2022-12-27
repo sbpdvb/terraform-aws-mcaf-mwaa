@@ -104,7 +104,7 @@ variable "plugins_s3_path" {
 variable "requirements_s3_object_version" {
   type        = string
   description = "The requirements.txt file version you"
-  default     = "latest"
+  default     = "ADhCLpCIQmbrPPjnoFKu3WehA.EXV2p3"
 }
 
 variable "requirements_s3_path" {
