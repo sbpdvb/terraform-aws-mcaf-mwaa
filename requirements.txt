@@ -1,0 +1,3 @@
+--constraint "/usr/local/airflow/dags/constraints-3.7-mod.txt"
+
+apache-airflow-providers-amazon==6.2.0

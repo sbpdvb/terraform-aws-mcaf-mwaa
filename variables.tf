@@ -104,13 +104,13 @@ variable "plugins_s3_path" {
 variable "requirements_s3_object_version" {
   type        = string
   description = "The requirements.txt file version you"
-  default     = null
+  default     = "latest"
 }
 
 variable "requirements_s3_path" {
   type        = string
   description = "The relative path to the requirements.txt file on your Amazon S3 storage bucket. For example, requirements.txt. If a relative path is provided in the request, then requirements_s3_object_version is required"
-  default     = null
+  default     = "requirements.txt"
 }
 
 variable "webserver_access_mode" {
