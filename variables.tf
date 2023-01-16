@@ -1,5 +1,5 @@
 variable "name" {
-    type = string
+  type = string
 }
 
 variable "vpc_id" {
@@ -8,7 +8,7 @@ variable "vpc_id" {
 }
 
 variable "tags" {
-    default = {}
+  default = {}
 }
 
 variable "create_s3_bucket" {
@@ -30,8 +30,8 @@ variable "create_security_group" {
 }
 
 variable "log_bucket" {
-    type = string
-    default = null
+  type    = string
+  default = null
 }
 
 
@@ -53,10 +53,10 @@ variable "airflow_configuration_options" {
   default     = null
 }
 
-variable "airflow_version" {
-  type        = string
-  description = "Airflow version of the MWAA environment, will be set by default to the latest version that MWAA supports."
-  default     = ""
+variable "airflow_versions" {
+  type        = list(string)
+  description = "List of Airflow version of the MWAA environment, will be set by default to the latest version that MWAA supports."
+  default     = []
 }
 
 variable "dag_s3_path" {

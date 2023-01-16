@@ -1,5 +1,5 @@
 resource "aws_security_group" "mwaa" {
-  count = var.create_security_group ? 1 :0
+  count       = var.create_security_group ? 1 : 0
   name        = var.name
   description = "Allow traffic to the MWAA"
   vpc_id      = var.vpc_id
@@ -17,14 +17,14 @@ resource "aws_security_group" "mwaa" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    self = true
+    self        = true
   }
 
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = var.tags

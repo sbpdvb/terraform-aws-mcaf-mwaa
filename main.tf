@@ -4,16 +4,16 @@ data "aws_region" "current" {}
 
 locals {
 
-  account_id             = data.aws_caller_identity.current.account_id
-  partition              = data.aws_partition.current.partition
-  security_group_ids     = var.create_security_group ? concat(var.associated_security_group_ids, aws_security_group.mwaa[*].id) : var.associated_security_group_ids
-  s3_bucket_arn          = var.create_s3_bucket ? module.s3_bucket[0].arn : var.source_bucket_arn
-  execution_role_arn     = var.create_iam_role ? module.iam_role[0].arn : var.execution_role_arn
+  account_id         = data.aws_caller_identity.current.account_id
+  partition          = data.aws_partition.current.partition
+  security_group_ids = var.create_security_group ? concat(var.associated_security_group_ids, aws_security_group.mwaa[*].id) : var.associated_security_group_ids
+  s3_bucket_arn      = var.create_s3_bucket ? module.s3_bucket[0].arn : var.source_bucket_arn
+  execution_role_arn = var.create_iam_role ? module.iam_role[0].arn : var.execution_role_arn
 }
 
 
 module "s3_bucket" {
-  count = var.create_s3_bucket ? 1 : 0
+  count      = var.create_s3_bucket ? 1 : 0
   source     = "github.com/sbpdvb/terraform-aws-mcaf-s3?ref=v0.6.1"
   name       = "${var.name}-mwaa"
   versioning = true
@@ -26,9 +26,10 @@ module "s3_bucket" {
 }
 
 resource "aws_mwaa_environment" "default" {
+  for_each                        = toset(var.airflow_versions)
   name                            = var.name
   airflow_configuration_options   = var.airflow_configuration_options
-  airflow_version                 = var.airflow_version
+  airflow_version                 = each.key
   dag_s3_path                     = var.dag_s3_path
   environment_class               = var.environment_class
   kms_key                         = var.kms_key
@@ -72,7 +73,7 @@ resource "aws_mwaa_environment" "default" {
 
   network_configuration {
     security_group_ids = local.security_group_ids
-    subnet_ids         = slice(var.subnet_ids,0,2)
+    subnet_ids         = slice(var.subnet_ids, 0, 2)
   }
 
   tags = var.tags

@@ -99,11 +99,11 @@ data "aws_iam_policy_document" "policy" {
 
 
 module "iam_role" {
-   count = var.create_iam_role ? 1:0
+  count                 = var.create_iam_role ? 1 : 0
   source                = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.3.2"
   name                  = "MWAA-${var.name}-role"
   create_policy         = true
-  principal_identifiers = [  "airflow-env.amazonaws.com", "airflow.amazonaws.com"]
+  principal_identifiers = ["airflow-env.amazonaws.com", "airflow.amazonaws.com"]
   principal_type        = "Service"
   role_policy           = data.aws_iam_policy_document.policy.json
   tags                  = var.tags
