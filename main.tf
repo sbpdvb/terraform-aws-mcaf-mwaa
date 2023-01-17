@@ -27,7 +27,7 @@ module "s3_bucket" {
 
 resource "aws_mwaa_environment" "default" {
   for_each                        = toset(var.airflow_versions)
-  name                            = var.name
+  name                            = "${var.name}-${replace(each.key, ".", "-")}"
   airflow_configuration_options   = var.airflow_configuration_options
   airflow_version                 = each.key
   dag_s3_path                     = var.dag_s3_path
