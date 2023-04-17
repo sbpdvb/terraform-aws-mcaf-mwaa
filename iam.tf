@@ -99,6 +99,18 @@ data "aws_iam_policy_document" "policy" {
     effect    = "Allow"
     resources = ["*"]
   }
+  statement {
+    effect = "Allow"
+    action = [
+      "secretsmanager:GetResourcePolicy",
+      "secretsmanager:GetSecretValue",
+      "secretsmanager:DescribeSecret",
+      "secretsmanager:ListSecretVersionIds",
+      "secretsmanager:ListSecrets,"
+    ]
+    resource = ["*"]
+  }
+
 }
 
 
