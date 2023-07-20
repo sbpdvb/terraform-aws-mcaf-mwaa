@@ -34,7 +34,6 @@ variable "log_bucket" {
   default = null
 }
 
-
 variable "source_bucket_arn" {
   type        = string
   description = "If `create_s3_bucket` is `false` then set this to the Amazon Resource Name (ARN) of your Amazon S3 storage bucket."
@@ -103,7 +102,7 @@ variable "plugins_s3_path" {
 
 variable "requirements_s3_object_version" {
   type        = string
-  description = "The requirements.txt file version you"
+  description = "The requirements.txt file version you want to use."
   default     = null
 }
 

@@ -11,7 +11,6 @@ locals {
   execution_role_arn = var.create_iam_role ? module.iam_role[0].arn : var.execution_role_arn
 }
 
-
 module "s3_bucket" {
   count      = var.create_s3_bucket ? 1 : 0
   source     = "github.com/sbpdvb/terraform-aws-mcaf-s3?ref=v0.6.1"
