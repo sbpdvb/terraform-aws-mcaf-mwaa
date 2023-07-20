@@ -197,15 +197,6 @@ variable "associated_security_group_ids" {
     EOT
 }
 
-variable "allowed_security_group_ids" {
-  type        = list(string)
-  default     = []
-  description = <<-EOT
-    A list of IDs of Security Groups to allow access to the security group created by this module.
-    The length of this list must be known at "plan" time.
-    EOT
-}
-
 variable "allowed_cidr_blocks" {
   type        = list(string)
   default     = []
