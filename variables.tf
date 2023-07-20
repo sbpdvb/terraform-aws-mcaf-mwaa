@@ -215,3 +215,8 @@ variable "allowed_cidr_blocks" {
     EOT
 }
 
+variable "trusting_accounts" {
+  type        = list(string)
+  default     = []
+  description = "Account IDs that will trust this MWAA cluster to assume roles."
+}

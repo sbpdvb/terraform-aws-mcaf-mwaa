@@ -94,6 +94,13 @@ data "aws_iam_policy_document" "policy" {
     effect    = "Allow"
     resources = ["arn:${local.partition}:airflow:${data.aws_region.current.name}:${local.account_id}:environment/${var.name}"]
   }
+
+  statement {
+    count = var.trusting_accounts > 0 ? 1 : 0
+    actions = ["sts:AssumeRole"]
+    effect = "Allow"
+    resources = [for account_id in var.trusting_accounts : "arn:aws:iam::${account_id}:role/*"]
+  }
 }
 
 
