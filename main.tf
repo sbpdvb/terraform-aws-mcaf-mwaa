@@ -13,6 +13,7 @@ locals {
 
 module "s3_bucket" {
   count      = var.create_s3_bucket ? 1 : 0
+
   source     = "github.com/sbpdvb/terraform-aws-mcaf-s3?ref=v0.6.1"
   name       = "${var.name}-mwaa"
   versioning = true
@@ -34,9 +35,9 @@ resource "aws_mwaa_environment" "default" {
   max_workers                     = var.max_workers
   min_workers                     = var.min_workers
   plugins_s3_object_version       = var.plugins_s3_object_version
-  plugins_s3_path                 = "${var.airflow_version}/${var.plugins_s3_path}"
+  plugins_s3_path                 = var.plugins_s3_path
   requirements_s3_object_version  = var.requirements_s3_object_version
-  requirements_s3_path            = "${var.airflow_version}/${var.requirements_s3_path}"
+  requirements_s3_path            = var.requirements_s3_path
   webserver_access_mode           = var.webserver_access_mode
   weekly_maintenance_window_start = var.weekly_maintenance_window_start
   source_bucket_arn               = local.s3_bucket_arn
