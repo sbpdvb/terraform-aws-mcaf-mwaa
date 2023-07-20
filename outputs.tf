@@ -10,51 +10,37 @@ output "execution_role_arn" {
 
 output "arn" {
   description = "The ARN of the Amazon MWAA Environment"
-  value = {
-    for k, v in aws_mwaa_environment.default : k => v.arn
-  }
+  value       = aws_mwaa_environment.default.arn
 }
 
 output "created_at" {
   description = "The Created At date of the Amazon MWAA Environment"
-  value = {
-    for k, v in aws_mwaa_environment.default : k => v.created_at
-  }
+  value       = aws_mwaa_environment.default.created_at
 }
 
 output "logging_configuration" {
   description = "The Logging Configuration of the Amazon MWAA Environment"
-  value = {
-    for k, v in aws_mwaa_environment.default : k => try(v.logging_configuration, [])
-  }
+  value       = aws_mwaa_environment.default.logging_configuration
 }
 
 output "service_role_arn" {
   description = "The Service Role ARN of the Amazon MWAA Environment"
-  value = {
-    for k, v in aws_mwaa_environment.default : k => v.service_role_arn
-  }
+  value       = aws_mwaa_environment.default.service_role_arn
 }
 
 output "status" {
   description = "The status of the Amazon MWAA Environment"
-  value = {
-    for k, v in aws_mwaa_environment.default : k => v.status
-  }
+  value       = aws_mwaa_environment.default.status
 }
 
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider for the Amazon MWAA Environment"
-  value = {
-    for k, v in aws_mwaa_environment.default : k => try(v.tags_all, [])
-  }
+  value       = aws_mwaa_environment.default.tags_all
 }
 
 output "webserver_url" {
   description = "The webserver URL of the Amazon MWAA Environment"
-  value = {
-    for k, v in aws_mwaa_environment.default : k => v.webserver_url
-  }
+  value       = aws_mwaa_environment.default.webserver_url
 }
 
 output "security_group_id" {
