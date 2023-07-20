@@ -52,10 +52,9 @@ variable "airflow_configuration_options" {
   default     = null
 }
 
-variable "airflow_versions" {
-  type        = list(string)
-  description = "List of Airflow version of the MWAA environment, will be set by default to the latest version that MWAA supports."
-  default     = []
+variable "airflow_version" {
+  type        = string
+  description = "Airflow version of the MWAA environment."
 }
 
 variable "dag_s3_path" {
