@@ -26,7 +26,7 @@ module "s3_bucket" {
 }
 
 resource "aws_mwaa_environment" "default" {
-  name                            = "${var.name}-${var.airflow_version}"
+  name                            = var.name
   airflow_configuration_options   = var.airflow_configuration_options
   airflow_version                 = var.airflow_version
   dag_s3_path                     = var.dag_s3_path
