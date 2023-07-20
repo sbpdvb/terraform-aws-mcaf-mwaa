@@ -11,9 +11,9 @@ locals {
   execution_role_arn = var.create_iam_role ? module.iam_role[0].arn : var.execution_role_arn
 }
 
-
 module "s3_bucket" {
   count      = var.create_s3_bucket ? 1 : 0
+
   source     = "github.com/sbpdvb/terraform-aws-mcaf-s3?ref=v0.6.1"
   name       = "${var.name}-mwaa"
   versioning = true
@@ -26,19 +26,18 @@ module "s3_bucket" {
 }
 
 resource "aws_mwaa_environment" "default" {
-  for_each                        = toset(var.airflow_versions)
-  name                            = "${var.name}-${replace(each.key, ".", "-")}"
+  name                            = var.name
   airflow_configuration_options   = var.airflow_configuration_options
-  airflow_version                 = each.key
+  airflow_version                 = var.airflow_version
   dag_s3_path                     = var.dag_s3_path
   environment_class               = var.environment_class
   kms_key                         = var.kms_key
   max_workers                     = var.max_workers
   min_workers                     = var.min_workers
   plugins_s3_object_version       = var.plugins_s3_object_version
-  plugins_s3_path                 = "${each.key}/${var.plugins_s3_path}"
+  plugins_s3_path                 = var.plugins_s3_path
   requirements_s3_object_version  = var.requirements_s3_object_version
-  requirements_s3_path            = "${each.key}/${var.requirements_s3_path}"
+  requirements_s3_path            = var.requirements_s3_path
   webserver_access_mode           = var.webserver_access_mode
   weekly_maintenance_window_start = var.weekly_maintenance_window_start
   source_bucket_arn               = local.s3_bucket_arn

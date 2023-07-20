@@ -34,7 +34,6 @@ variable "log_bucket" {
   default = null
 }
 
-
 variable "source_bucket_arn" {
   type        = string
   description = "If `create_s3_bucket` is `false` then set this to the Amazon Resource Name (ARN) of your Amazon S3 storage bucket."
@@ -53,10 +52,9 @@ variable "airflow_configuration_options" {
   default     = null
 }
 
-variable "airflow_versions" {
-  type        = list(string)
-  description = "List of Airflow version of the MWAA environment, will be set by default to the latest version that MWAA supports."
-  default     = []
+variable "airflow_version" {
+  type        = string
+  description = "Airflow version of the MWAA environment."
 }
 
 variable "dag_s3_path" {
@@ -103,7 +101,7 @@ variable "plugins_s3_path" {
 
 variable "requirements_s3_object_version" {
   type        = string
-  description = "The requirements.txt file version you"
+  description = "The requirements.txt file version you want to use."
   default     = null
 }
 
@@ -199,15 +197,6 @@ variable "associated_security_group_ids" {
     EOT
 }
 
-variable "allowed_security_group_ids" {
-  type        = list(string)
-  default     = []
-  description = <<-EOT
-    A list of IDs of Security Groups to allow access to the security group created by this module.
-    The length of this list must be known at "plan" time.
-    EOT
-}
-
 variable "allowed_cidr_blocks" {
   type        = list(string)
   default     = []
@@ -217,3 +206,8 @@ variable "allowed_cidr_blocks" {
     EOT
 }
 
+variable "trusting_accounts" {
+  type        = list(string)
+  default     = []
+  description = "Account IDs that will trust this MWAA cluster to assume roles."
+}
