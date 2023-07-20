@@ -94,11 +94,6 @@ data "aws_iam_policy_document" "policy" {
     effect    = "Allow"
     resources = ["arn:${local.partition}:airflow:${data.aws_region.current.name}:${local.account_id}:environment/${var.name}"]
   }
-  statement {
-    actions   = ["glue:*"]
-    effect    = "Allow"
-    resources = ["*"]
-  }
 }
 
 
