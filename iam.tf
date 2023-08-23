@@ -101,14 +101,14 @@ data "aws_iam_policy_document" "policy" {
   }
   statement {
     effect = "Allow"
-    action = [
+    actions = [
       "secretsmanager:GetResourcePolicy",
       "secretsmanager:GetSecretValue",
       "secretsmanager:DescribeSecret",
       "secretsmanager:ListSecretVersionIds",
       "secretsmanager:ListSecrets,"
     ]
-    resource = ["*"]
+    resources = ["*"]
   }
 
 }
