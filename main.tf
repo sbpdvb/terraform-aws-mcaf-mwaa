@@ -18,7 +18,7 @@ module "s3_bucket" {
   name       = "${var.name}-mwaa"
   versioning = true
   tags       = var.tags
-  #policy     = data.aws_iam_policy_document.processed_bucket_policy.json
+  policy     = data.aws_iam_policy_document.mwaa_bucket_policy.json
   logging = {
     target_bucket = var.log_bucket
     target_prefix = "${var.name}-mwaa"

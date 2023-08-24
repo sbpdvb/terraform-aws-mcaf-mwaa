@@ -12,6 +12,8 @@ data "aws_iam_policy_document" "policy" {
     ]
   }
 
+
+
   statement {
     actions = [
       "s3:GetObject*",
@@ -105,6 +107,47 @@ data "aws_iam_policy_document" "policy" {
       "secretsmanager:ListSecrets,"
     ]
     resources = ["*"]
+  }
+
+}
+data "aws_iam_policy_document" "mwaa_bucket_policy" {
+
+  statement {
+    sid    = "AllowMWAAService"
+    effect = "Allow"
+    actions = [
+      "s3:GetObject",
+      "s3:PutObject",
+      "s3:ListBucket",
+      "s3:DeleteObject"
+    ]
+    resources = [
+      local.s3_bucket_arn,
+      "${local.s3_bucket_arn}/*"
+    ]
+    principals {
+      type        = "Service"
+      identifiers = ["airflow.amazonaws.com"]
+    }
+  }
+
+  statement {
+    sid    = "AllowMWAARole"
+    effect = "Allow"
+    actions = [
+      "s3:GetObject",
+      "s3:PutObject",
+      "s3:ListBucket",
+      "s3:DeleteObject"
+    ]
+    resources = [
+      local.s3_bucket_arn,
+      "${local.s3_bucket_arn}/*"
+    ]
+    principals {
+      type        = "AWS"
+      identifiers = [local.execution_role_arn]
+    }
   }
 
 }
