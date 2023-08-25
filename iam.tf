@@ -22,6 +22,19 @@ data "aws_iam_policy_document" "policy" {
     resources = [
       local.s3_bucket_arn,
       "${local.s3_bucket_arn}/*"
+      # "arn:aws:s3::${var.log_bucket}",
+      # "arn:aws:s3::$${var.log_bucket}/*"
+    ]
+  }
+
+  statement {
+    actions = [
+      "s3:DeleteObject"
+    ]
+    effect = "Allow"
+    resources = [
+      local.s3_bucket_arn,
+      "${local.s3_bucket_arn}/*"
     ]
   }
 
@@ -117,7 +130,7 @@ module "iam_role" {
   create_policy         = true
   principal_identifiers = ["airflow-env.amazonaws.com", "airflow.amazonaws.com"]
   principal_type        = "Service"
-  role_policy           = data.aws_iam_policy_document.policy.json
+  role_policy           = data.aws_iam_policy_document.combined
   tags                  = var.tags
   permissions_boundary  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/PermissionsBoundary"
 }
