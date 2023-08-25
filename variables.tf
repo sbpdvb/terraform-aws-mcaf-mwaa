@@ -135,6 +135,12 @@ variable "dag_processing_logs_level" {
   default     = "INFO"
 }
 
+variable "policy" {
+  type        = string
+  default     = null
+  description = "A valid bucket policy JSON document"
+}
+
 variable "scheduler_logs_enabled" {
   type        = bool
   description = "Enabling or disabling the collection of logs for the schedulers"

@@ -21,8 +21,7 @@ data "aws_iam_policy_document" "policy" {
     effect = "Allow"
     resources = [
       local.s3_bucket_arn,
-      "${local.s3_bucket_arn}/*"
-    ]
+    "${local.s3_bucket_arn}/*"]
   }
 
   statement {
@@ -117,7 +116,7 @@ module "iam_role" {
   create_policy         = true
   principal_identifiers = ["airflow-env.amazonaws.com", "airflow.amazonaws.com"]
   principal_type        = "Service"
-  role_policy           = data.aws_iam_policy_document.policy.json
+  role_policy           = data.aws_iam_policy_document.combined.json
   tags                  = var.tags
   permissions_boundary  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/PermissionsBoundary"
 }

@@ -5,10 +5,18 @@ data "aws_region" "current" {}
 locals {
 
   account_id         = data.aws_caller_identity.current.account_id
-  partition          = data.aws_partition.current.partition
-  security_group_ids = var.create_security_group ? concat(var.associated_security_group_ids, aws_security_group.mwaa[*].id) : var.associated_security_group_ids
-  s3_bucket_arn      = var.create_s3_bucket ? module.s3_bucket[0].arn : var.source_bucket_arn
   execution_role_arn = var.create_iam_role ? module.iam_role[0].arn : var.execution_role_arn
+  policy             = var.policy != null ? var.policy : null
+  partition          = data.aws_partition.current.partition
+  s3_bucket_arn      = var.create_s3_bucket ? module.s3_bucket[0].arn : var.source_bucket_arn
+  security_group_ids = var.create_security_group ? concat(var.associated_security_group_ids, aws_security_group.mwaa[*].id) : var.associated_security_group_ids
+}
+
+data "aws_iam_policy_document" "combined" {
+  source_policy_documents = compact([
+    local.policy,
+    data.aws_iam_policy_document.policy.json
+  ])
 }
 
 module "s3_bucket" {
