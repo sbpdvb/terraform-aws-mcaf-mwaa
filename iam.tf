@@ -21,21 +21,7 @@ data "aws_iam_policy_document" "policy" {
     effect = "Allow"
     resources = [
       local.s3_bucket_arn,
-      "${local.s3_bucket_arn}/*"
-      # "arn:aws:s3::${var.log_bucket}",
-      # "arn:aws:s3::$${var.log_bucket}/*"
-    ]
-  }
-
-  statement {
-    actions = [
-      "s3:DeleteObject"
-    ]
-    effect = "Allow"
-    resources = [
-      local.s3_bucket_arn,
-      "${local.s3_bucket_arn}/*"
-    ]
+    "${local.s3_bucket_arn}/*"]
   }
 
   statement {
