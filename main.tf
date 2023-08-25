@@ -15,7 +15,7 @@ locals {
 data "aws_iam_policy_document" "combined" {
   source_policy_documents = compact([
     local.policy,
-    data.aws_iam_policy_document.policy
+    data.aws_iam_policy_document.policy.json
   ])
 }
 
