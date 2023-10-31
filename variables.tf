@@ -217,3 +217,9 @@ variable "trusting_accounts" {
   default     = []
   description = "Account IDs that will trust this MWAA cluster to assume roles."
 }
+
+variable "startup_script_s3_path" {
+  type        = string
+  default     = null
+  description = "The relative path to the startup script on your Amazon S3 storage bucket. For example, startup.sh"
+}

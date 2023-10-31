@@ -46,6 +46,7 @@ resource "aws_mwaa_environment" "default" {
   plugins_s3_path                 = var.plugins_s3_path
   requirements_s3_object_version  = var.requirements_s3_object_version
   requirements_s3_path            = var.requirements_s3_path
+  startup_script_s3_path          = var.startup_script_s3_path
   webserver_access_mode           = var.webserver_access_mode
   weekly_maintenance_window_start = var.weekly_maintenance_window_start
   source_bucket_arn               = local.s3_bucket_arn
