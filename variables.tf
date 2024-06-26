@@ -8,6 +8,7 @@ variable "vpc_id" {
 }
 
 variable "tags" {
+  type    = map(string)
   default = {}
 }
 
@@ -222,4 +223,26 @@ variable "startup_script_s3_path" {
   type        = string
   default     = null
   description = "The relative path to the startup script on your Amazon S3 storage bucket. For example, startup.sh"
+}
+
+variable "permissions_boundary" {
+  type        = string
+  default     = null
+  description = "value of the permissions boundary to attach to the role"
+}
+
+variable "role_prefix" {
+  type        = string
+  default     = "app"
+  description = "Prefix for the IAM role"
+}
+
+variable "endpoint_management" {
+  type        = string
+  default     = "SERVICE"
+  description = "Let MWAA manage the endpoint or not. Possible values: SERVICE, CUSTOMER"
+  validation {
+    condition     = var.endpoint_management == "SERVICE" || var.endpoint_management == "CUSTOMER"
+    error_message = "endpoint_management can be SERVICE or CUSTOMER"
+  }
 }

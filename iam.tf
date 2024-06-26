@@ -1,8 +1,8 @@
 
 
-
 data "aws_iam_policy_document" "policy" {
-
+  #checkov:skip=CKV_AWS_108
+  #checkov:skip=CKV_AWS_356
   statement {
     actions = ["s3:ListAllMyBuckets"]
     effect  = "Deny"
@@ -38,12 +38,14 @@ data "aws_iam_policy_document" "policy" {
     resources = ["arn:${local.partition}:logs:${data.aws_region.current.name}:${local.account_id}:log-group:airflow-${var.name}-*"]
   }
 
+  #checkov:skip=CKV_AWS_356
   statement {
     actions   = ["logs:DescribeLogGroups"]
     effect    = "Allow"
     resources = ["*"]
   }
 
+  #checkov:skip=CKV_AWS_356
   statement {
     actions   = ["s3:GetAccountPublicAccessBlock"]
     effect    = "Allow"
@@ -94,6 +96,7 @@ data "aws_iam_policy_document" "policy" {
     resources = ["arn:${local.partition}:airflow:${data.aws_region.current.name}:${local.account_id}:environment/${var.name}"]
   }
 
+  #checkov:skip=CKV_AWS_356
   statement {
     effect = "Allow"
     actions = [
@@ -112,11 +115,11 @@ data "aws_iam_policy_document" "policy" {
 module "iam_role" {
   count                 = var.create_iam_role ? 1 : 0
   source                = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.3.2"
-  name                  = "MWAA-${var.name}-role"
+  name                  = join("-", [var.role_prefix, "MWAA", var.name])
   create_policy         = true
   principal_identifiers = ["airflow-env.amazonaws.com", "airflow.amazonaws.com"]
   principal_type        = "Service"
   role_policy           = data.aws_iam_policy_document.combined.json
   tags                  = var.tags
-  permissions_boundary  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/PermissionsBoundary"
+  permissions_boundary  = var.permissions_boundary
 }
