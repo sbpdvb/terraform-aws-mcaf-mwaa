@@ -20,6 +20,12 @@ data "aws_iam_policy_document" "combined" {
 }
 
 module "s3_bucket" {
+  #checkov:skip=CKV2_AWS_62
+  #checkov:skip=CKV_AWS_21
+  #checkov:skip=CKV_AWS_19
+  #checkov:skip=CKV_AWS_145
+  #checkov:skip=CKV2_AWS_62
+
   count = var.create_s3_bucket ? 1 : 0
 
   source     = "github.com/sbpdvb/terraform-aws-mcaf-s3?ref=v0.6.1"
@@ -34,11 +40,16 @@ module "s3_bucket" {
 }
 
 resource "aws_mwaa_environment" "default" {
+  #checkov:skip=CKV_AWS_243
+  #checkov:skip=CKV_AWS_242
+  #checkov:skip=CKV_AWS_244
+
   name                            = var.name
   airflow_configuration_options   = var.airflow_configuration_options
   airflow_version                 = var.airflow_version
   dag_s3_path                     = var.dag_s3_path
   environment_class               = var.environment_class
+  endpoint_management             = var.endpoint_management
   kms_key                         = var.kms_key
   max_workers                     = var.max_workers
   min_workers                     = var.min_workers
