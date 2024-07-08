@@ -4,12 +4,14 @@ data "aws_region" "current" {}
 
 locals {
 
-  account_id         = data.aws_caller_identity.current.account_id
-  execution_role_arn = var.create_iam_role ? module.iam_role[0].arn : var.execution_role_arn
-  policy             = var.policy != null ? var.policy : null
-  partition          = data.aws_partition.current.partition
-  s3_bucket_arn      = var.create_s3_bucket ? module.s3_bucket[0].arn : var.source_bucket_arn
-  security_group_ids = var.create_security_group ? concat(var.associated_security_group_ids, aws_security_group.mwaa[*].id) : var.associated_security_group_ids
+  account_id             = data.aws_caller_identity.current.account_id
+  execution_role_arn     = var.create_iam_role ? module.iam_role[0].arn : var.execution_role_arn
+  policy                 = var.policy != null ? var.policy : null
+  partition              = data.aws_partition.current.partition
+  s3_bucket_arn          = var.create_s3_bucket ? module.s3_bucket[0].arn : var.source_bucket_arn
+  requirements_s3_path   = count(var.requirements_s3_path) > 0 ? var.requirements_s3_path : "requirements.txt"
+  startup_script_s3_path = count(var.startup_script_s3_path) > 0 ? var.startup_script_s3_path : "startup.sh"
+  security_group_ids     = var.create_security_group ? concat(var.associated_security_group_ids, aws_security_group.mwaa[*].id) : var.associated_security_group_ids
 }
 
 data "aws_iam_policy_document" "combined" {
@@ -49,7 +51,6 @@ resource "aws_mwaa_environment" "default" {
   airflow_version                 = var.airflow_version
   dag_s3_path                     = var.dag_s3_path
   environment_class               = var.environment_class
-  endpoint_management             = var.endpoint_management
   kms_key                         = var.kms_key
   max_workers                     = var.max_workers
   min_workers                     = var.min_workers
