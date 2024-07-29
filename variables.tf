@@ -237,6 +237,12 @@ variable "role_prefix" {
   description = "Prefix for the IAM role"
 }
 
+variable "kms_key_arn" {
+  type        = string
+  default     = null
+  description = "The ARN of the KMS key to use for encryption"
+}
+
 variable "endpoint_management" {
   type        = string
   default     = "SERVICE"
