@@ -225,6 +225,12 @@ variable "startup_script_s3_path" {
   description = "The relative path to the startup script on your Amazon S3 storage bucket. For example, startup.sh"
 }
 
+variable "startup_script_s3_path_version" {
+  type        = string
+  default     = null
+  description = "The version of the startup script on your Amazon S3 storage bucket."
+}
+
 variable "permissions_boundary" {
   type        = string
   default     = null

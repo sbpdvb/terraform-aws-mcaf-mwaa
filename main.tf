@@ -9,8 +9,10 @@ locals {
   policy                 = var.policy != null ? var.policy : null
   partition              = data.aws_partition.current.partition
   s3_bucket_arn          = var.create_s3_bucket ? module.s3_bucket[0].arn : var.source_bucket_arn
+  plugins_s3_path        = length(var.plugins_s3_path) > 0 ? var.plugins_s3_path : "plugins.zip"
   requirements_s3_path   = length(var.requirements_s3_path) > 0 ? var.requirements_s3_path : "requirements.txt"
   startup_script_s3_path = length(var.startup_script_s3_path) > 0 ? var.startup_script_s3_path : "startup.sh"
+
 
   security_group_ids = var.create_security_group ? concat(var.associated_security_group_ids, aws_security_group.mwaa[*].id) : var.associated_security_group_ids
 }
@@ -43,24 +45,25 @@ resource "aws_mwaa_environment" "default" {
   #checkov:skip=CKV_AWS_242
   #checkov:skip=CKV_AWS_244
 
-  name                            = var.name
-  airflow_configuration_options   = var.airflow_configuration_options
-  airflow_version                 = var.airflow_version
-  dag_s3_path                     = var.dag_s3_path
-  environment_class               = var.environment_class
-  endpoint_management             = var.endpoint_management
-  kms_key                         = var.kms_key_arn
-  max_workers                     = var.max_workers
-  min_workers                     = var.min_workers
-  plugins_s3_object_version       = var.plugins_s3_object_version
-  plugins_s3_path                 = var.plugins_s3_path
-  requirements_s3_object_version  = var.requirements_s3_object_version
-  requirements_s3_path            = local.requirements_s3_path
-  startup_script_s3_path          = local.startup_script_s3_path
-  webserver_access_mode           = var.webserver_access_mode
-  weekly_maintenance_window_start = var.weekly_maintenance_window_start
-  source_bucket_arn               = local.s3_bucket_arn
-  execution_role_arn              = local.execution_role_arn
+  name                             = var.name
+  airflow_configuration_options    = var.airflow_configuration_options
+  airflow_version                  = var.airflow_version
+  dag_s3_path                      = var.dag_s3_path
+  environment_class                = var.environment_class
+  endpoint_management              = var.endpoint_management
+  kms_key                          = var.kms_key_arn
+  max_workers                      = var.max_workers
+  min_workers                      = var.min_workers
+  plugins_s3_object_version        = var.plugins_s3_object_version
+  plugins_s3_path                  = local.plugins_s3_path
+  requirements_s3_object_version   = var.requirements_s3_object_version
+  requirements_s3_path             = local.requirements_s3_path
+  startup_script_s3_path           = local.startup_script_s3_path
+  startup_script_s3_object_version = var.startup_script_s3_path_version
+  webserver_access_mode            = var.webserver_access_mode
+  weekly_maintenance_window_start  = var.weekly_maintenance_window_start
+  source_bucket_arn                = local.s3_bucket_arn
+  execution_role_arn               = local.execution_role_arn
 
   logging_configuration {
     dag_processing_logs {
