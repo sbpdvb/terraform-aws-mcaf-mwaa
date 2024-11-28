@@ -104,7 +104,7 @@ data "aws_iam_policy_document" "policy" {
       "secretsmanager:GetSecretValue",
       "secretsmanager:DescribeSecret",
       "secretsmanager:ListSecretVersionIds",
-      "secretsmanager:ListSecrets,"
+      "secretsmanager:ListSecrets"
     ]
     resources = ["*"]
   }
@@ -113,8 +113,10 @@ data "aws_iam_policy_document" "policy" {
 
 
 module "iam_role" {
-  count                 = var.create_iam_role ? 1 : 0
-  source                = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.3.2"
+  count   = var.create_iam_role ? 1 : 0
+  source  = "schubergphilis/mcaf-role/aws"
+  version = "0.4.0"
+
   name                  = join("-", [var.role_prefix, "MWAA", var.name])
   create_policy         = true
   principal_identifiers = ["airflow-env.amazonaws.com", "airflow.amazonaws.com"]

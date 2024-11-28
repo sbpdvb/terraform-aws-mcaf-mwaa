@@ -27,16 +27,16 @@ data "aws_iam_policy_document" "combined" {
 
 module "s3_bucket" {
   #checkov:skip=CKV_AWS_21
-  count       = var.create_s3_bucket ? 1 : 0
-  source      = "github.com/schubergphilis/terraform-aws-mcaf-s3?ref=v0.14.0"
-  name        = "${var.name}-mwaa"
-  versioning  = true
-  tags        = var.tags
-  kms_key_arn = var.kms_key_arn
-  logging = {
-    target_bucket = var.log_bucket
-    target_prefix = "${var.name}-mwaa"
-  }
+  count   = var.create_s3_bucket ? 1 : 0
+  source  = "schubergphilis/mcaf-s3/aws"
+  version = "0.15.0"
+
+  name           = "${var.name}-mwaa"
+  versioning     = true
+  tags           = var.tags
+  kms_key_arn    = var.kms_key_arn
+  logging        = var.s3_logging
+  lifecycle_rule = var.s3_lifecycle_rule
 }
 
 
