@@ -40,7 +40,7 @@ module "s3_bucket" {
 
 resource "aws_s3_bucket_policy" "additional_policy_dag_bucket" {
   #if var.create_s3_bucket is null , this resource will not be created
-  count  = var.dag_bucket_policy ? 1 : 0
+  count  = length(var.dag_bucket_policy) > 1 ? 1 : 0
   bucket = module.s3_bucket[0].id
   policy = var.dag_bucket_policy
 }
