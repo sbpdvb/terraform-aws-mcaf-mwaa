@@ -1,3 +1,17 @@
-.terraform*
+#  Local .terraform directories
+**/.terraform/*
 
-.idea
+.terraform.lock.hcl
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# .tfvars files
+*.tfvars
+
+# gh token
+.token
+
+# CheckOv pre-commit external modules path
+**/.external_modules/*

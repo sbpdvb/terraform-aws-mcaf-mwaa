@@ -24,7 +24,6 @@ data "aws_iam_policy_document" "combined" {
 }
 
 
-#if policy is not provided, use the default policy
 module "s3_bucket" {
   #checkov:skip=CKV_AWS_21
   count   = var.create_s3_bucket ? 1 : 0
@@ -37,7 +36,11 @@ module "s3_bucket" {
   kms_key_arn    = var.kms_key_arn
   logging        = var.s3_logging
   lifecycle_rule = var.s3_lifecycle_rule
-  policy         = aws_iam_policy_document.combined.json
+}
+
+resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
+  bucket = module.s3_bucket[0].id
+  policy = data.aws_iam_policy_document.allow_access_from_another_account.json
 }
 
 
