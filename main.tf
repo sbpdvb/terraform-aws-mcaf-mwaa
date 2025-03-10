@@ -39,8 +39,10 @@ module "s3_bucket" {
 }
 
 resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
+  #if var.create_s3_bucket is null , this resource will not be created
+  count  = var.dag_bucket_policy ? 1 : 0
   bucket = module.s3_bucket[0].id
-  policy = data.aws_iam_policy_document.allow_access_from_another_account.json
+  policy = var.dag_bucket_policy
 }
 
 

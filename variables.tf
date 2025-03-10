@@ -298,3 +298,9 @@ variable "s3_lifecycle_rule" {
   default     = []
   description = "List of maps containing lifecycle management configuration settings."
 }
+
+variable "dag_bucket_policy" {
+  type        = string
+  default     = null
+  description = "A valid dag bucket policy JSON document"
+}
