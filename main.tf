@@ -13,7 +13,6 @@ locals {
   requirements_s3_path   = length(var.requirements_s3_path) > 0 ? var.requirements_s3_path : "requirements.txt"
   startup_script_s3_path = length(var.startup_script_s3_path) > 0 ? var.startup_script_s3_path : "startup.sh"
 
-
   security_group_ids = var.create_security_group ? concat(var.associated_security_group_ids, aws_security_group.mwaa[*].id) : var.associated_security_group_ids
 }
 
@@ -25,6 +24,7 @@ data "aws_iam_policy_document" "combined" {
 }
 
 
+#if policy is not provided, use the default policy
 module "s3_bucket" {
   #checkov:skip=CKV_AWS_21
   count   = var.create_s3_bucket ? 1 : 0
@@ -37,6 +37,7 @@ module "s3_bucket" {
   kms_key_arn    = var.kms_key_arn
   logging        = var.s3_logging
   lifecycle_rule = var.s3_lifecycle_rule
+  policy         = aws_iam_policy_document.combined.json
 }
 
 
