@@ -38,7 +38,7 @@ module "s3_bucket" {
   lifecycle_rule = var.s3_lifecycle_rule
 }
 
-resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
+resource "aws_s3_bucket_policy" "additional_policy_dag_bucket" {
   #if var.create_s3_bucket is null , this resource will not be created
   count  = var.dag_bucket_policy ? 1 : 0
   bucket = module.s3_bucket[0].id
