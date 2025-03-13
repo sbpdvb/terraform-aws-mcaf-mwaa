@@ -34,15 +34,9 @@ module "s3_bucket" {
   versioning     = true
   tags           = var.tags
   kms_key_arn    = var.kms_key_arn
+  policy         = var.dag_bucket_policy
   logging        = var.s3_logging
   lifecycle_rule = var.s3_lifecycle_rule
-}
-
-resource "aws_s3_bucket_policy" "additional_policy_dag_bucket" {
-  #if var.create_s3_bucket is null , this resource will not be created
-  count  = length(var.dag_bucket_policy) > 1 ? 1 : 0
-  bucket = module.s3_bucket[0].id
-  policy = var.dag_bucket_policy
 }
 
 
