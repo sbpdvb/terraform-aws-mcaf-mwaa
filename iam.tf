@@ -111,6 +111,11 @@ data "aws_iam_policy_document" "policy" {
 
 }
 
+module "combined_boundary_policy" {
+  source            = "app.terraform.io/devolksbank-ep/buildingblock-ep-boundary-policy-gen/aws"
+  version           = "~> 0.3.0"
+  policy_jsons_list = [data.aws_iam_policy_document.combined.json]
+}
 
 module "iam_role" {
   count   = var.create_iam_role ? 1 : 0
@@ -123,5 +128,5 @@ module "iam_role" {
   principal_type        = "Service"
   role_policy           = data.aws_iam_policy_document.combined.json
   tags                  = var.tags
-  permissions_boundary  = var.permissions_boundary
+  permissions_boundary  = module.combined_boundary_policy.arn
 }
