@@ -231,10 +231,15 @@ variable "startup_script_s3_path_version" {
   description = "The version of the startup script on your Amazon S3 storage bucket."
 }
 
+# tflint-ignore: terraform_unused_declarations
 variable "permissions_boundary" {
   type        = string
+  description = "Will be deprecated in future version"
   default     = null
-  description = "value of the permissions boundary to attach to the role"
+}
+
+output "permissions_boundary_deprecation" {
+  value = var.permissions_boundary != null ? "⚠️ Warning: The 'permissions_boundary' variable is deprecated and will be removed in a future version." : ""
 }
 
 variable "role_prefix" {
