@@ -113,8 +113,9 @@ data "aws_iam_policy_document" "policy" {
 
 module "combined_boundary_policy" {
   source            = "app.terraform.io/devolksbank-ep/buildingblock-ep-boundary-policy-gen/aws"
-  version           = "~> 0.3.0"
+  version           = "~> 0.4.0"
   policy_jsons_list = [data.aws_iam_policy_document.combined.json]
+  manual_services = [logs]
 }
 
 module "iam_role" {
