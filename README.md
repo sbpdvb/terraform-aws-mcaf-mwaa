@@ -106,7 +106,7 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_combined_boundary_policy"></a> [combined\_boundary\_policy](#module\_combined\_boundary\_policy) | app.terraform.io/devolksbank-ep/buildingblock-ep-boundary-policy-gen/aws | ~> 0.3.0 |
+| <a name="module_combined_boundary_policy"></a> [combined\_boundary\_policy](#module\_combined\_boundary\_policy) | app.terraform.io/devolksbank-ep/buildingblock-ep-boundary-policy-gen/aws | ~> 0.4.0 |
 | <a name="module_iam_role"></a> [iam\_role](#module\_iam\_role) | schubergphilis/mcaf-role/aws | 0.4.0 |
 | <a name="module_s3_bucket"></a> [s3\_bucket](#module\_s3\_bucket) | schubergphilis/mcaf-s3/aws | 0.15.0 |
 
